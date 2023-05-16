@@ -1,7 +1,7 @@
 <p align="center">
   <img src="./src/images/chartfox-logo.png" style="width: 300px">
-  <h1 align="center">Chromium Browser Extension</h1>
 </p>
+<p align="center"><b >Chromium Browser Extension</b></p>
   
 ## About
 The ChartFox chromium browser extension is an extension for Chromium-based browsers (e.g. Google Chrome, Microsoft Edge, etc.) that integrates with the [ChartFox](https://chartfox.org) web application to enable Cross-Origin resource requests to be allowed when loading aeronautical charts.
