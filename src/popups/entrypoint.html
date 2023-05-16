@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" class="w-80">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../scripts/styling.ts" type="module"></script>
+    <script src="../scripts/entrypoint.ts" type="module"></script>
+</head>
+
+<body class="p-4">
+    <div>
+        <img src="../images/chartfox-logo.png" class="w-60 mx-auto" />
+    </div>
+    <div class="flex w-full gap-2">
+        <input id="icaoInput" type="text" placeholder="ICAO Code" class="flex-grow border px-2 text-lg" />
+        <button href="https://chartfox.org" id="goButton"
+            class="p-2 rounded bg-cf-orange hover:bg-cf-orange-dark transition font-bold text-lg text-white">Go</button>
+    </div>
+    <h1 class="font-bold italic text-lg mt-6">About</h1>
+    <p>This extension enables the seamless loading of aeronautical charts from chart suppliers on the ChartFox
+        application, allowing us to give you a better viewing experience in-app. It does this by ensuring that when the
+        app requests a PDF from the supplier, the browser lets us load it outside of an iframe.</p>
+    <p class="mt-3">This extension only does this when the ChartFox website sends requests. The source code for this
+        extension is
+        open-source - you can find it <a href="https://github.com" target="_blank"
+            class="underline text-cf-orange">here</a>.</p>
+</body>
+
+</html>
