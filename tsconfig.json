@@ -21,6 +21,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
+      // "rollup",
+      "vite/client",
       "chrome-types",
     ],
     "declaration": true,
@@ -28,5 +30,6 @@
   },
   "include": [
     "src",
+    "vite.config.ts"
   ],
 }

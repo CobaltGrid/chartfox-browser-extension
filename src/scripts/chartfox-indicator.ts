@@ -1,2 +1,2 @@
 window.postMessage(
-      {type : "chartfox_extension_enabled"}, "*");
+  { type: 'chartfox_extension_enabled' }, '*')
