@@ -28,7 +28,7 @@
                 "src/scripts/chartfox-indicator.ts"
             ],
             "matches": [
-                "http://localhost/*"
+                "*://localhost/*"
             ]
         }
     ],
