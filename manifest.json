@@ -7,8 +7,7 @@
         "declarativeNetRequest"
     ],
     "host_permissions": [
-        "https://*/*",
-        "http://*/*"
+        "*://*/*"
     ],
     "declarative_net_request": {
         "rule_resources": [
