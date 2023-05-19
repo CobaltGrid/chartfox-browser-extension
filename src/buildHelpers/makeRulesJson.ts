@@ -1,4 +1,6 @@
+import makeConfig from './config'
 export default function (env: Record<string, string>): chrome.declarativeNetRequest.Rule[] {
+  const config = makeConfig(env)
   return [
     {
       id: 1,
@@ -17,7 +19,7 @@ export default function (env: Record<string, string>): chrome.declarativeNetRequ
         resourceTypes: [
           'xmlhttprequest'
         ],
-        initiatorDomains: (env.VITE_DOMAINS ?? 'localhost').split(',')
+        initiatorDomains: config.appDomains
       }
     }
   ]
