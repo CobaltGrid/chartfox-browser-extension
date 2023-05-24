@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "ChartFox Browser Extension",
-    "description": "Enables integrated chart viewing within the ChartFox application",
+    "description": "Enable fully-integrated chart viewing within the ChartFox web app",
     "version": "1.1",
     "permissions": [
         "declarativeNetRequest"
