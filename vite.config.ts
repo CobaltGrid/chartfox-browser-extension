@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
   }
 
   // Modify the manifest based on the environment
-  manifest.content_scripts[0].matches = env.VITE_DOMAINS.split(',').map(domain => `*://${domain}/*`)
+  manifest.content_scripts[0].matches = env.VITE_DOMAINS.split(',').map(domain => `*://*.${domain}/*`)
 
   return {
     plugins: [
