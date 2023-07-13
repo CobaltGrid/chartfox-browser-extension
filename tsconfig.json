@@ -23,7 +23,6 @@
     "types": [
       // "rollup",
       "vite/client",
-      "chrome-types",
     ],
     "declaration": true,
     "declarationDir": "types",
