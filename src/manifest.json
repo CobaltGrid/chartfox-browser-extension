@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ChartFox Browser Extension",
+  "version": "1.2",
+  "description": "Enable fully-integrated chart viewing within the ChartFox web app",
+  "developer": {
+    "name": "ChartFox",
+    "url": "https://chartfox.org/"
+  },
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "(build)"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rule.json"
+      }
+    ]
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "js": [
+        "indicator.ts"
+      ],
+      "matches": [
+        "(build)"
+      ]
+    }
+  ],
+  "icons": {
+    "48": "img/icon.png"
+  }
+}

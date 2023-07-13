@@ -1,43 +1,55 @@
-import { defineConfig, loadEnv } from 'vite'
-import { crx } from '@crxjs/vite-plugin'
-import manifest from './manifest.json'
-import makeRulesJson from './src/buildHelpers/makeRulesJson'
+import manifest from './src/manifest.json'
+import rule from './src/rule.json'
+
 import fs from 'fs'
+import { resolve } from 'path'
+
+import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production'
+  const defaultInitiators = isProduction
+    ? 'chartfox.org,beta.chartfox.org'
+    : 'localhost'
 
   // Load environment variables, set defaults
   const env = loadEnv(mode, process.cwd(), '')
-  if (env.VITE_DOMAINS === undefined) env.VITE_DOMAINS = (isProduction ? 'chartfox.org' : 'localhost')
+  env.VITE_INITIATOR_DOMAINS ??= env.VITE_DOMAINS ?? defaultInitiators
+  env.VITE_REQUEST_DOMAINS ??= '*'
 
-  // Define function to generate the rule.json file required
-  const makeRuleFile = (): void => {
-    fs.writeFileSync('src/rule.json', JSON.stringify(makeRulesJson(env)))
+  const processDomainList = (list?: string): string[] | undefined => {
+    list ??= ''
+    if (list === '') return
+
+    return list.split(',').map((domain) => `*://${domain}/*`)
   }
 
-  // Modify the manifest based on the environment
-  manifest.content_scripts[0].matches = env.VITE_DOMAINS.split(',').map(domain => `*://*.${domain}/*`)
+  const initiators = processDomainList(env.VITE_INITIATOR_DOMAINS) as string[]
+  const requests = processDomainList(env.VITE_REQUEST_DOMAINS)
 
   return {
-    plugins: [
-      crx({ manifest }),
-      {
-        name: 'generate-rule-json',
-        load (): void {
-          makeRuleFile()
-        },
-        generateBundle () {
-          makeRuleFile()
-        }
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/indicator.ts'),
+        formats: ['es'],
+        fileName: 'indicator'
       }
-    ],
-    server: {
-      port: 5174,
-      strictPort: true,
-      hmr: {
-        port: 5174
+    },
+    plugins: [{
+      name: 'manifest-json-generation',
+      async renderStart (outputOptions) {
+        const resolveTs = (paths: string[]): string[] =>
+          paths.map((file) => file.replace('.ts', '.js'))
+
+        manifest.content_scripts[0].js = resolveTs(manifest.content_scripts[0].js)
+        manifest.content_scripts[0].matches = initiators
+        manifest.host_permissions = initiators.concat(requests ?? [])
+        rule[0].condition.initiatorDomains = env.VITE_INITIATOR_DOMAINS.split(',')
+
+        const out = outputOptions.dir ?? 'dist'
+        fs.writeFileSync(resolve(out, 'manifest.json'), JSON.stringify(manifest))
+        fs.writeFileSync(resolve(out, 'rule.json'), JSON.stringify(rule))
       }
-    }
+    }]
   }
 })
