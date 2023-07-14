@@ -1,4 +1,5 @@
-# ChartFox Browser Extension
+<img src="./logo.png" style="display: block; margin: 0px auto; width: 300px;" />
+<p style="text-align: center;"><b>ChartFox browser extension</b></p>
 
 The ChartFox browser extension is an extension for Chromium-based browsers (Google Chrome, Microsoft Edge, etc.) and Firefox that integrates with the [ChartFox](https://chartfox.org/) web application to allow it to provide full support for aeronautical charts loaded from restrictive services.
 
@@ -6,26 +7,36 @@ The ChartFox browser extension is an extension for Chromium-based browsers (Goog
 
 Most websites, including the AIPs which ChartFox loads its charts from, have either no or restrictive [Cross-Origin Resource Sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) headers. The effect of this is that ChartFox is only able to display charts from these sources by directly including the webpage (with an `<iframe>`), which severely restricts our ability to make them integrate nicely.
 
-CORS is a necessity and cannot be bypassed by websites on their own. Typically, this issue is circumvented by proxying the content through a first-party external server, however this is dubious in terms of copyright legality. Alternatively, given CORS is a browser-implemented restriction, native applications do not suffer from this issue &mdash; whilst this would be the most ideal solution, the browser extension effectively simulates this functionality (by adding its own `Access-Control-Allow-Origin` header to requests made by ChartFox) whilst being much simpler to create.
+CORS is a necessity and cannot be bypassed by websites on their own. Typically, this issue is circumvented by proxying the content through a first-party external server, however this is generally disallowed by sources. Alternatively, given CORS is a browser-implemented restriction, native applications (those installed directly on the system, instead of accessed through the browser) do not suffer from this issue &mdash; whilst this would be the most ideal solution, the browser extension effectively simulates this functionality (by adding its own `Access-Control-Allow-Origin` header to requests made by ChartFox) whilst being much simpler to create.
 
 This also means that clients still load the charts directly from the supplier &mdash; pretty neat!
 
-## Build instructions
+## Building
 
-The extension is very simple, consisting only of the two manifest JSON files and a single content script which signals its presence to the ChartFox application. As such, the build consists only of compiling the content script (from TypeScript) and then substituting the relevant domains into the manifests. It makes use of a simple Vite configuration, with the domains being taken from environment variables.
+The extension is consists of the manifest JSON files (used by the browser) and a single content script which signals its presence to the ChartFox application. A build step is used to compile the content script (from TypeScript) and substitute the relevant domains into the manifests. Vite is used as the build tool, with environment variables used to configure settings.
 
-Once the repository is cloned, the first step to building is installing the required dependencies by running `yarn`. Building is then done by `yarn build`, with the output extension in the "dist/" directory.
+To install dependencies and build the extension, run:
 
-The default environment variables are as follows, shown in the syntax used to customise them when entered into the ".env" file in the root:
+```
+yarn
+yarn build
+```
 
-```ini
+The compiled extension is then available in the "dist/" directory.
+
+### Default settings
+
+The default environment variables are shown below:
+
+```
 # The domains used to make the requests (in dev, localhost)
 VITE_INITIATOR_DOMAINS=chartfox.org,beta.chartfox.org
 
 # The domains which will be requested (AIPs)
-# Defaults to "*", but should be made more specific in actual builds
 VITE_REQUEST_DOMAINS=*
 ```
+
+These can be configured by a file named ".env" in the project root, making use of the same format as above.
 
 ## License
 
