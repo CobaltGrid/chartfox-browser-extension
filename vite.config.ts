@@ -1,3 +1,4 @@
+import { version } from './package.json'
 import manifest from './src/manifest.json'
 import rule from './src/rule.json'
 
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
         const resolveTs = (paths: string[]): string[] =>
           paths.map((file) => file.replace('.ts', '.js'))
 
+        manifest.version = version
         manifest.content_scripts[0].js = resolveTs(manifest.content_scripts[0].js)
         manifest.content_scripts[0].matches = initiators
         manifest.host_permissions = initiators.concat(requests ?? [])
