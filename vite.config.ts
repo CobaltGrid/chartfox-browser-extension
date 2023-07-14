@@ -8,13 +8,12 @@ import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production'
-  const defaultInitiators = isProduction
-    ? 'chartfox.org,beta.chartfox.org'
-    : 'localhost'
 
   // Load environment variables, set defaults
   const env = loadEnv(mode, process.cwd(), '')
-  env.VITE_INITIATOR_DOMAINS ??= env.VITE_DOMAINS ?? defaultInitiators
+  env.VITE_INITIATOR_DOMAINS ??= isProduction
+    ? 'chartfox.org,beta.chartfox.org'
+    : 'localhost'
   env.VITE_REQUEST_DOMAINS ??= '*'
 
   const processDomainList = (list?: string): string[] | undefined => {
