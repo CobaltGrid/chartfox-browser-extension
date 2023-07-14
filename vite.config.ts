@@ -23,18 +23,28 @@ export default defineConfig(({ mode }) => {
   return {
     build: {
       lib: {
-        entry: resolve(__dirname, 'src/indicator.ts'),
-        formats: ['es'],
-        fileName: 'indicator'
+        entry: fs.readdirSync('src')
+          .filter((name) => /^\w+\.ts$/.test(name))
+          .map((path) => resolve(__dirname, 'src', path)),
+        formats: ['es']
       }
     },
     plugins: [{
       name: 'manifest-json-generation',
+      resolveId (id) {
+        return id === 'config' ? '.json?config' : null
+      },
+      load (id) {
+        return id === '.json?config'
+          ? JSON.stringify({ initiators, requests })
+          : null
+      },
       async renderStart (outputOptions) {
         const resolveTs = (paths: string[]): string[] =>
           paths.map((file) => file.replace('.ts', '.js'))
 
         manifest.version = version
+        manifest.background.scripts = resolveTs(manifest.background.scripts)
         manifest.content_scripts[0].js = resolveTs(manifest.content_scripts[0].js)
         manifest.content_scripts[0].matches = initiators
         manifest.host_permissions = initiators.concat(requests ?? [])

@@ -20,6 +20,11 @@
     ]
   },
   "action": {},
+  "background": {
+    "scripts": [
+      "background.ts"
+    ]
+  },
   "content_scripts": [
     {
       "js": [
