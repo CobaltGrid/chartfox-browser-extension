@@ -28,6 +28,7 @@
     "declarationDir": "types",
   },
   "include": [
+    "helper",
     "src",
     "vite.config.ts"
   ],

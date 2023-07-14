@@ -2,6 +2,8 @@ import { version } from './package.json'
 import manifest from './src/manifest.json'
 import rule from './src/rule.json'
 
+import processDomainList from './helper/process-domain'
+
 import fs from 'fs'
 import { resolve } from 'path'
 
@@ -12,17 +14,8 @@ export default defineConfig(({ mode }) => {
 
   // Load environment variables, set defaults
   const env = loadEnv(mode, process.cwd(), '')
-  env.VITE_INITIATOR_DOMAINS ??= isProduction
-    ? 'chartfox.org,beta.chartfox.org'
-    : 'localhost'
+  env.VITE_INITIATOR_DOMAINS ??= isProduction ? 'chartfox.org' : 'localhost'
   env.VITE_REQUEST_DOMAINS ??= '*'
-
-  const processDomainList = (list?: string): string[] | undefined => {
-    list ??= ''
-    if (list === '') return
-
-    return list.split(',').map((domain) => `*://${domain}/*`)
-  }
 
   const initiators = processDomainList(env.VITE_INITIATOR_DOMAINS) as string[]
   const requests = processDomainList(env.VITE_REQUEST_DOMAINS)

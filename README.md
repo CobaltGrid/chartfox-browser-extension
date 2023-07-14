@@ -30,7 +30,7 @@ The default environment variables are shown below:
 
 ```
 # The domains used to make the requests (in dev, localhost)
-VITE_INITIATOR_DOMAINS=chartfox.org,beta.chartfox.org
+VITE_INITIATOR_DOMAINS=chartfox.org
 
 # The domains which will be requested (AIPs)
 VITE_REQUEST_DOMAINS=*
