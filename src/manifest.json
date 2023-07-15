@@ -23,7 +23,8 @@
   "background": {
     "scripts": [
       "background.ts"
-    ]
+    ],
+    "service_worker": "background.ts"
   },
   "content_scripts": [
     {

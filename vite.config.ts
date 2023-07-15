@@ -20,6 +20,8 @@ export default defineConfig(({ mode }) => {
   const initiators = processDomainList(env.VITE_INITIATOR_DOMAINS) as string[]
   const requests = processDomainList(env.VITE_REQUEST_DOMAINS)
 
+  const isFirefox = env.VITE_TARGET === 'firefox'
+
   return {
     define: {
       __REQUIRED_HOSTS__: initiators.concat(requests ?? []),
@@ -36,14 +38,22 @@ export default defineConfig(({ mode }) => {
     plugins: [{
       name: 'manifest-json-generation',
       async renderStart (outputOptions) {
-        const resolveTs = (paths: string[]): string[] =>
-          paths.map((file) => file.replace('.ts', '.js'))
+        const resolveTs = (file: string): string => file.replace('.ts', '.js')
 
         manifest.version = version
-        manifest.background.scripts = resolveTs(manifest.background.scripts)
-        manifest.content_scripts[0].js = resolveTs(manifest.content_scripts[0].js)
+
+        manifest.background.scripts = isFirefox
+          ? manifest.background.scripts.map(resolveTs)
+          : undefined as unknown as string[]
+        manifest.background.service_worker = isFirefox
+          ? undefined as unknown as string
+          : resolveTs(manifest.background.service_worker)
+
+        manifest.content_scripts[0].js = manifest.content_scripts[0].js.map(resolveTs)
         manifest.content_scripts[0].matches = initiators
+
         manifest.host_permissions = initiators.concat(requests ?? [])
+
         rule[0].condition.initiatorDomains = env.VITE_INITIATOR_DOMAINS.split(',')
 
         const out = outputOptions.dir ?? 'dist'
