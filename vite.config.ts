@@ -5,7 +5,7 @@ import rule from './src/rule.json'
 import processDomainList from './helper/process-domain'
 
 import fs from 'fs'
-import { resolve } from 'path'
+import { resolve, basename } from 'path'
 
 import { defineConfig, loadEnv } from 'vite'
 
@@ -30,14 +30,14 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: fs.readdirSync('src')
-          .filter((name) => /^\w+\.ts$/.test(name))
-          .map((path) => resolve(__dirname, 'src', path)),
+          .filter((name) => /^\w+\.(ts|html)$/.test(name))
+          .map((name) => resolve(__dirname, 'src', name)),
         formats: ['es']
       }
     },
     plugins: [{
       name: 'manifest-json-generation',
-      async renderStart (outputOptions) {
+      renderStart (outputOptions) {
         const resolveTs = (file: string): string => file.replace('.ts', '.js')
 
         manifest.version = version
@@ -59,6 +59,19 @@ export default defineConfig(({ mode }) => {
         const out = outputOptions.dir ?? 'dist'
         fs.writeFileSync(resolve(out, 'manifest.json'), JSON.stringify(manifest))
         fs.writeFileSync(resolve(out, 'rule.json'), JSON.stringify(rule))
+      },
+      writeBundle (_outputOptions, bundle) {
+        // I can't believe it's come to this -- testament to the futility of
+        // ill-conceived nonsense as is Vite/Rollup
+        Object.keys(bundle)
+          .filter((path) => path.endsWith('.html'))
+          .forEach((name) => {
+            fs.renameSync(
+              resolve(__dirname, 'dist', name),
+              resolve(__dirname, 'dist', basename(name))
+            )
+          })
+        fs.rmdirSync('dist/src')
       }
     }]
   }

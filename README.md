@@ -1,4 +1,4 @@
-<p align="center"><img src="./logo.png" width="300" /></p>
+<p align="center"><img src="./public/img/logo.png" width="300" /></p>
 <p align="center"><b>ChartFox browser extension</b></p>
 
 The ChartFox browser extension is an extension for Chromium-based browsers (Google Chrome, Microsoft Edge, etc.) and Firefox that integrates with the [ChartFox](https://chartfox.org/) web application to allow it to provide full support for aeronautical charts loaded from restrictive services.

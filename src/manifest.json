@@ -36,6 +36,9 @@
       ]
     }
   ],
+  "options_ui": {
+    "page": "about.html"
+  },
   "icons": {
     "48": "img/icon.png"
   }

@@ -1,0 +1,12 @@
+body {
+	width: fit-content;
+	max-width: 400px;
+	margin: 250px auto;
+
+	font-family: 'sans-serif';
+	text-align: center;
+}
+
+#request {
+	visibility: hidden;
+}
