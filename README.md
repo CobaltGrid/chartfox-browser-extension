@@ -17,9 +17,10 @@ The extension is consists of the manifest JSON files (used by the browser) and a
 
 To install dependencies and build the extension, run:
 
-```
+```sh
 yarn
-yarn build
+VITE_TARGET=chrome yarn build  # for chromium
+VITE_TARGET=firefox yarn build # for firefox
 ```
 
 The compiled extension is then available in the "dist/" directory.
@@ -34,6 +35,9 @@ VITE_INITIATOR_DOMAINS=chartfox.org
 
 # The domains which will be requested (AIPs)
 VITE_REQUEST_DOMAINS=*
+
+# The browser to build the extension for
+VITE_TARGET=chrome
 ```
 
 These can be configured by a file named ".env" in the project root, making use of the same format as above.
