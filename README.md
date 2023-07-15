@@ -13,7 +13,7 @@ This also means that clients still load the charts directly from the supplier &m
 
 ## Building
 
-The extension is consists of the manifest JSON files (used by the browser) and a single content script which signals its presence to the ChartFox application. A build step is used to compile the content script (from TypeScript) and substitute the relevant domains into the manifests. Vite is used as the build tool, with environment variables used to configure settings.
+The extension consists of the manifest JSON files (used by the browser) and a content script which signals its presence to the ChartFox application. A build step is used to compile the content script (from TypeScript) and substitute the relevant domains into the manifests. Vite is used as the build tool, with environment variables used to configure settings.
 
 To install dependencies and build the extension, run:
 
