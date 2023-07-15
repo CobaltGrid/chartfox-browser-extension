@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       __REQUIRED_HOSTS__: initiators.concat(requests ?? []),
-      __VERSION__: version
+      __VERSION__: JSON.stringify(version)
     },
     build: {
       lib: {
