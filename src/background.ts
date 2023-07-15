@@ -1,4 +1,4 @@
-const api = (window.chrome ?? browser)
+const api = globalThis.chrome ?? browser
 
 api.runtime.onMessage.addListener((_m, _s, reply: (value: boolean) => void) => {
   void api.permissions.contains({ origins: __REQUIRED_HOSTS__ })

@@ -4,7 +4,7 @@ postMessage({
 }, '*')
 
 const checkPermissions = (origin: string = '*'): void => {
-  void (window.chrome ?? browser).runtime.sendMessage(null)
+  void (globalThis.chrome ?? browser).runtime.sendMessage(null)
     .then((hasPermissions: boolean) => {
       postMessage({
         type: 'chartfox_extension_permissions_checked',
