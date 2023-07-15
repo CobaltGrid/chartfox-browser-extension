@@ -21,6 +21,10 @@ export default defineConfig(({ mode }) => {
   const requests = processDomainList(env.VITE_REQUEST_DOMAINS)
 
   return {
+    define: {
+      __REQUIRED_HOSTS__: initiators.concat(requests ?? []),
+      __VERSION__: version
+    },
     build: {
       lib: {
         entry: fs.readdirSync('src')
@@ -31,14 +35,6 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [{
       name: 'manifest-json-generation',
-      resolveId (id) {
-        return id === 'config' ? '.json?config' : null
-      },
-      load (id) {
-        return id === '.json?config'
-          ? JSON.stringify({ initiators, requests })
-          : null
-      },
       async renderStart (outputOptions) {
         const resolveTs = (paths: string[]): string[] =>
           paths.map((file) => file.replace('.ts', '.js'))

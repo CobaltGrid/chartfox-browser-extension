@@ -1,6 +1,4 @@
-import { initiators, requests } from 'config'
-
-const origins = initiators.concat(requests ?? [])
+const origins = __REQUIRED_HOSTS__
 const api = (window.chrome ?? browser)
 
 api.runtime.onMessage.addListener((_m, _s, reply: (value: boolean) => void) => {
