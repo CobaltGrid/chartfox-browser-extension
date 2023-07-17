@@ -49,12 +49,15 @@ export default defineConfig(({ mode }) => {
 
         manifest.version = version
 
-        manifest.background.scripts = isFirefox
-          ? manifest.background.scripts.map(resolveTs)
-          : undefined as unknown as string[]
-        manifest.background.service_worker = isFirefox
-          ? undefined as unknown as string
-          : resolveTs(manifest.background.service_worker)
+        if (isFirefox) {
+          manifest.background.scripts = manifest.background.scripts.map(resolveTs)
+          // @ts-expect-error Chromium-specific manifest key
+          delete manifest.background.service_worker
+        } else {
+          manifest.background.service_worker = resolveTs(manifest.background.service_worker)
+          // @ts-expect-error Firefox-specific manifest key
+          delete manifest.background.scripts
+        }
 
         manifest.content_scripts[0].js = manifest.content_scripts[0].js.map(resolveTs)
         manifest.content_scripts[0].matches = initiators
