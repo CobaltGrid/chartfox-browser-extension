@@ -3,7 +3,7 @@
   "name": "ChartFox Browser Extension",
   "version": "(build)",
   "description": "Enable fully-integrated chart viewing within the ChartFox web app",
-  "author": "ChartFox",
+  "author": "Cobalt Grid",
   "browser_specific_settings": {
     "gecko": {
       "id": "chartfox.cors-extension@cobaltgrid.com"

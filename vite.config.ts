@@ -62,13 +62,12 @@ export default defineConfig(({ mode }) => {
           manifest.background.service_worker = resolveTs(manifest.background.service_worker)
           // @ts-expect-error Firefox-specific manifest key
           delete manifest.background.scripts
+          // @ts-expect-error Firefox-specific manifest key
+          delete manifest.browser_specific_settings
         }
 
         manifest.content_scripts[0].js = manifest.content_scripts[0].js.map(resolveTs)
         manifest.content_scripts[0].matches = initiators
-
-        // @ts-expect-error Manifest key is not allowed for chromium
-        if (!isFirefox) delete manifest.browser_specific_settings
 
         manifest.host_permissions = initiators.concat(requests ?? [])
 
@@ -81,8 +80,6 @@ export default defineConfig(({ mode }) => {
       writeBundle (outputOptions, bundle) {
         const out = outputOptions.dir ?? outDir
 
-        // I can't believe it's come to this -- testament to the futility of
-        // ill-conceived nonsense as is Vite/Rollup
         Object.keys(bundle)
           .filter((path) => path.endsWith('.html'))
           .forEach((name) => {
