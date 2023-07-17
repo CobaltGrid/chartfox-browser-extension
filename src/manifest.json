@@ -4,6 +4,11 @@
   "version": "(build)",
   "description": "Enable fully-integrated chart viewing within the ChartFox web app",
   "author": "ChartFox",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "chartfox.cors-extension@cobaltgrid.com"
+    }
+  },
   "permissions": [
     "declarativeNetRequest"
   ],
