@@ -1,10 +1,8 @@
-const { permissions } = globalThis.chrome ?? browser
-
 const statusText = document.getElementById('status') as HTMLParagraphElement
 const requestBut = document.getElementById('request') as HTMLButtonElement
 
 const update = (): void => {
-  void permissions.contains({ origins: __REQUIRED_HOSTS__ })
+  void __API__.permissions.contains({ origins: __REQUIRED_HOSTS__ })
     .then((hasPermissions: boolean) => {
       if (hasPermissions) {
         statusText.innerText = '✅ Permissions granted — you can close this page'
@@ -17,7 +15,7 @@ const update = (): void => {
 }
 
 requestBut.addEventListener('click', () => {
-  void permissions.request({ origins: __REQUIRED_HOSTS__ }).then(update)
+  void __API__.permissions.request({ origins: __REQUIRED_HOSTS__ }).then(update)
 })
 
 update()

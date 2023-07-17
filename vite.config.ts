@@ -31,6 +31,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     define: {
+      __API__: isFirefox ? 'browser' : 'chrome',
       __REQUIRED_HOSTS__: initiators.concat(requests ?? []),
       __VERSION__: JSON.stringify(version)
     },

@@ -1,7 +1,5 @@
-const browserApi = globalThis.chrome ?? browser
-
 // On page load, check with the background script if the required permissions have been granted
-void browserApi.runtime.sendMessage('checkPermissions')
+void __API__.runtime.sendMessage('checkPermissions')
   .then((hasPermissions: boolean) => {
     // TODO: In the future, display a popup on the site to notify the user that the extension is disabled, and prompt to request permissions. However, this typically won't work as it is likely that this script is not even being run!
     if (!hasPermissions) return
