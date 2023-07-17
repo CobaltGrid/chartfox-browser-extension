@@ -24,12 +24,12 @@
       }
     ]
   },
-  "action": {},
   "background": {
     "scripts": [
       "background.ts"
     ],
-    "service_worker": "background.ts"
+    "service_worker": "background.ts",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -42,7 +42,8 @@
     }
   ],
   "options_ui": {
-    "page": "about.html"
+    "page": "about.html",
+    "browser_style": false
   },
   "icons": {
     "48": "img/icon.png"

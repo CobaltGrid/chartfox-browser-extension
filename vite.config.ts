@@ -52,6 +52,9 @@ export default defineConfig(({ mode }) => {
         manifest.content_scripts[0].js = manifest.content_scripts[0].js.map(resolveTs)
         manifest.content_scripts[0].matches = initiators
 
+        // @ts-expect-error Manifest key is not allowed for chromium
+        if (!isFirefox) delete manifest.browser_specific_settings
+
         manifest.host_permissions = initiators.concat(requests ?? [])
 
         rule[0].condition.initiatorDomains = env.VITE_INITIATOR_DOMAINS.split(',')

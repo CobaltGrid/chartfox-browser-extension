@@ -1,11 +1,39 @@
-const api = globalThis.chrome ?? browser
+import browserApi from '../helper/browser-api'
 
-api.runtime.onMessage.addListener((_m, _s, reply: (value: boolean) => void) => {
-  void api.permissions.contains({ origins: __REQUIRED_HOSTS__ })
-    .then((result) => {
-      reply(result)
+// On install, check if the extension has permissions required
+browserApi.runtime.onInstalled.addListener(() => {
+  void checkPermissionsOrRequest(true)
+})
 
-      if (!result) void api.runtime.openOptionsPage()
-    })
+// On startup, check if the extension has permissions required
+browserApi.runtime.onStartup.addListener(() => {
+  void checkPermissionsOrRequest(true)
+})
+
+// If the content script requests a check, check perissions, request if able, and then reply
+browserApi.runtime.onMessage.addListener((_m, _s, reply: (value: boolean) => void) => {
+  if (_m !== 'checkPermissions') return false
+
+  void checkPermissionsOrRequest().then(reply)
   return true
 })
+
+// Returns a promise that indicates if all of the required permissions have been granted for the app
+async function checkHasPermissions (): Promise<boolean> {
+  return await browserApi.permissions.contains({ origins: __REQUIRED_HOSTS__ })
+}
+
+// Returns a promise that checks, and if not granted, requests, the required permissions for extension use
+async function checkPermissionsOrRequest (openAsTab: boolean = false): Promise<boolean> {
+  const result = await checkHasPermissions()
+
+  if (!result) {
+    if (openAsTab) openOptionsPageAsTab()
+    else void browserApi.runtime.openOptionsPage()
+  }
+  return result
+}
+
+function openOptionsPageAsTab (): void {
+  void browserApi.tabs.create({ url: browserApi.runtime.getURL('about.html') })
+}
