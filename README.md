@@ -19,8 +19,8 @@ To install dependencies and build the extension, run:
 
 ```sh
 yarn
-VITE_TARGET=chrome yarn build  # for chromium
-VITE_TARGET=firefox yarn build # for firefox
+yarn chrome build  # for chromium
+yarn firefox build # for firefox
 ```
 
 The compiled extension is then available in the "dist/" directory.

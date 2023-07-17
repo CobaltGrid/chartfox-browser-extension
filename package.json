@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "build-dev": "vite build --mode development",
+    "chrome": "VITE_TARGET=chrome yarn",
+    "firefox": "VITE_TARGET=firefox yarn",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
