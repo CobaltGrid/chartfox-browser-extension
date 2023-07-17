@@ -11,8 +11,8 @@ browserApi.runtime.onStartup.addListener(() => {
 })
 
 // If the content script requests a check, check perissions, request if able, and then reply
-browserApi.runtime.onMessage.addListener((_m, _s, reply: (value: boolean) => void) => {
-  if (_m !== 'checkPermissions') return false
+browserApi.runtime.onMessage.addListener((message, _sender, reply: (value: boolean) => void) => {
+  if (message !== 'checkPermissions') return false
 
   void checkPermissionsOrRequest().then(reply)
   return true
