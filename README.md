@@ -21,9 +21,10 @@ To install dependencies and build the extension, run:
 yarn
 yarn chrome build  # for chromium
 yarn firefox build # for firefox
+yarn build-all     # to build both
 ```
 
-The compiled extension is then available in the "dist/" directory.
+The compiled extension is then available in the "dist/(target)/" directory, where "(target)" is either "chrome" or "firefox".
 
 ### Default settings
 

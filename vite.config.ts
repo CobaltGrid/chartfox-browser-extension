@@ -27,7 +27,10 @@ export default defineConfig(({ mode }) => {
     console.log(`chartfox: building for ${env.VITE_TARGET}`)
   } else {
     console.log(`chartfox: building for chrome (unknown target ${env.VITE_TARGET})`)
+    env.VITE_TARGET = 'chrome'
   }
+
+  const outDir = 'dist/' + env.VITE_TARGET
 
   return {
     define: {
@@ -41,7 +44,8 @@ export default defineConfig(({ mode }) => {
           .filter((name) => /^\w+\.(ts|html)$/.test(name))
           .map((name) => resolve(__dirname, 'src', name)),
         formats: ['es']
-      }
+      },
+      outDir
     },
     plugins: [{
       name: 'manifest-json-generation',
@@ -70,22 +74,24 @@ export default defineConfig(({ mode }) => {
 
         rule[0].condition.initiatorDomains = env.VITE_INITIATOR_DOMAINS.split(',')
 
-        const out = outputOptions.dir ?? 'dist'
+        const out = outputOptions.dir ?? outDir
         fs.writeFileSync(resolve(out, 'manifest.json'), JSON.stringify(manifest))
         fs.writeFileSync(resolve(out, 'rule.json'), JSON.stringify(rule))
       },
-      writeBundle (_outputOptions, bundle) {
+      writeBundle (outputOptions, bundle) {
+        const out = outputOptions.dir ?? outDir
+
         // I can't believe it's come to this -- testament to the futility of
         // ill-conceived nonsense as is Vite/Rollup
         Object.keys(bundle)
           .filter((path) => path.endsWith('.html'))
           .forEach((name) => {
             fs.renameSync(
-              resolve(__dirname, 'dist', name),
-              resolve(__dirname, 'dist', basename(name))
+              resolve(out, name),
+              resolve(out, basename(name))
             )
           })
-        fs.rmdirSync('dist/src')
+        fs.rmdirSync(resolve(out, 'src'))
       }
     }]
   }

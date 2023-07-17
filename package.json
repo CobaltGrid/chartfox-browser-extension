@@ -4,11 +4,13 @@
   "version": "1.2.1",
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
-    "build-dev": "vite build --mode development",
+    "build": "tsc && yarn vite",
+    "build-all": "tsc && yarn chrome vite && yarn firefox vite",
+    "build-dev": "yarn vite --mode development",
     "chrome": "VITE_TARGET=chrome yarn",
     "firefox": "VITE_TARGET=firefox yarn",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "vite": "vite build"
   },
   "devDependencies": {
     "@types/node": "^20.1.7",
