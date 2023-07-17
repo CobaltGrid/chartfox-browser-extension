@@ -16,11 +16,18 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   env.VITE_INITIATOR_DOMAINS ??= isProduction ? 'chartfox.org' : 'localhost'
   env.VITE_REQUEST_DOMAINS ??= '*'
+  env.VITE_TARGET ??= 'chrome'
 
   const initiators = processDomainList(env.VITE_INITIATOR_DOMAINS) as string[]
   const requests = processDomainList(env.VITE_REQUEST_DOMAINS)
 
   const isFirefox = env.VITE_TARGET === 'firefox'
+
+  if (isFirefox || env.VITE_TARGET === 'chrome') {
+    console.log(`chartfox: building for ${env.VITE_TARGET}`)
+  } else {
+    console.log(`chartfox: building for chrome (unknown target ${env.VITE_TARGET})`)
+  }
 
   return {
     define: {
