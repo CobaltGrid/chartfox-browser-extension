@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "ChartFox Browser Extension",
+  "version": "(build)",
+  "description": "Enable fully-integrated chart viewing within the ChartFox web app",
+  "author": "Cobalt Grid",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "chartfox.cors-extension@cobaltgrid.com"
+    }
+  },
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "(build)"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rule.json"
+      }
+    ]
+  },
+  "background": {
+    "scripts": [
+      "background.ts"
+    ],
+    "service_worker": "background.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "indicator.ts"
+      ],
+      "matches": [
+        "(build)"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "about.html",
+    "browser_style": false
+  },
+  "icons": {
+    "48": "img/icon.png"
+  }
+}

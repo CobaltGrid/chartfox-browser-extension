@@ -21,15 +21,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
-      // "rollup",
       "vite/client",
-      "chrome-types",
+      "chrome-types"
     ],
     "declaration": true,
     "declarationDir": "types",
   },
   "include": [
+    "helper",
     "src",
-    "vite.config.ts"
+    "vite.config.ts",
+    "globals.d.ts"
   ],
 }
