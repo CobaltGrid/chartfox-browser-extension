@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
 
   // Load environment variables, set defaults
   const env = loadEnv(mode, process.cwd(), '')
-  env.VITE_INITIATOR_DOMAINS ??= isProduction ? 'chartfox.org' : 'localhost'
+  env.VITE_INITIATOR_DOMAINS ??= isProduction ? 'chartfox.org' : 'localhost,chartfox.test'
   env.VITE_REQUEST_DOMAINS ??= '*'
   env.VITE_TARGET ??= 'chrome'
 
@@ -72,6 +72,8 @@ export default defineConfig(({ mode }) => {
         manifest.host_permissions = initiators.concat(requests ?? [])
 
         rule[0].condition.initiatorDomains = env.VITE_INITIATOR_DOMAINS.split(',')
+
+        rule[0].condition.excludedRequestDomains = env.VITE_INITIATOR_DOMAINS.split(',')
 
         const out = outputOptions.dir ?? outDir
         fs.writeFileSync(resolve(out, 'manifest.json'), JSON.stringify(manifest))

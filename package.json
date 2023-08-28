@@ -1,7 +1,7 @@
 {
   "name": "chartfox-browser-extension",
   "private": true,
-  "version": "1.3",
+  "version": "1.3.1",
   "type": "module",
   "scripts": {
     "build": "tsc && yarn vite",

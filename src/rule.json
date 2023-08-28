@@ -18,6 +18,9 @@
       ],
       "initiatorDomains": [
         "(build)"
+      ],
+      "excludedRequestDomains": [
+        "(build)"
       ]
     }
   }
