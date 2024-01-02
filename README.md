@@ -3,6 +3,10 @@
 
 The ChartFox browser extension is an extension for Chromium-based browsers (Google Chrome, Microsoft Edge, etc.) and Firefox that integrates with the [ChartFox](https://chartfox.org/) web application to allow it to provide full support for aeronautical charts loaded from restrictive services.
 
+You can download it here:
+- [Chromium - Chrome/Edge](https://chromewebstore.google.com/detail/chartfox-browser-extensio/gbpidgkkacbjclomlpoajjmpkflgneep)
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/chartfox-browser-extension/)
+
 ## Rationale
 
 Most websites, including the AIPs which ChartFox loads its charts from, have either no or restrictive [Cross-Origin Resource Sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) headers. The effect of this is that ChartFox is only able to display charts from these sources by directly including the webpage (with an `<iframe>`), which severely restricts our ability to make them integrate nicely.
